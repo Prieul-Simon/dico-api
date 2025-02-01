@@ -7,12 +7,14 @@ const REDIS_KEY_ENVIRONMENT = Bun.env['REDIS_KEY_ENVIRONMENT'] ?? ((): string =>
 const REDIS_KEY_DEFINITIONS = 'definitions'
 const DEFAULT_WORD = 'Scrabble'
 
-
-const redisClient: Awaited<ReturnType<typeof createClient>> = await createClient({
+type RedisClient = Awaited<ReturnType<typeof createClient>>
+let redisClient: RedisClient = null as unknown as RedisClient
+createClient({
     url: `redis://${REDIS_URL}`,
 })
     .on('error', (err) => console.error('Redis Client Error', err))
     .connect()
+    .then((client) => { redisClient = client })
 
 export async function maybeCache(word: string, definition: Definition) : Promise<Definition> {
     const definitionAsString = JSON.stringify(definition)
