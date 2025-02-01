@@ -2,7 +2,7 @@
   "name": "dico-api",
   "module": "app.ts",
   "type": "module",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "scripts": {
     "dev": "bun --hot run app.ts",
     "tsc-watch": "tsc --watch",
@@ -18,7 +18,7 @@
     "axios": "1.7.9",
     "cheerio": "1.0.0",
     "figlet": "1.8.0",
-    "quick-lru": "7.0.0"
+    "redis": "4.7.0"
   },
   "devDependencies": {
     "@types/bun": "latest",

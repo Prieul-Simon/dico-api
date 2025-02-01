@@ -32,7 +32,7 @@ const emptyDefinition = (word: string): Definition => ({
 })
 
 export async function getDefinitions(word: string): Promise<Definition> {
-    const fromCache = getFromCache(word)
+    const fromCache = await getFromCache(word)
     if (fromCache) return fromCache
 
     const definition = await computeDefinition(word)
@@ -40,7 +40,7 @@ export async function getDefinitions(word: string): Promise<Definition> {
         console.error('Error while fetching definition for %s: ', word, definition.err)
         return emptyDefinition(word)
     }
-    maybeCache(word, definition)
+    await maybeCache(word, definition)
     return definition
 }
 
