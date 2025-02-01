@@ -45,7 +45,7 @@ RUN apk upgrade --no-cache && \
 
 # COPY --from=install /temp/prod/node_modules node_modules
 # COPY --from=prerelease /usr/src/app/dist/ dist/
-COPY --from=prerelease /usr/src/app/app .
+COPY --from=prerelease /usr/src/app/bin/ bin/
 # Also copy source files for linking in sourcemaps
 COPY --from=prerelease /usr/src/app/app.ts .
 COPY --from=prerelease /usr/src/app/src/ src/
