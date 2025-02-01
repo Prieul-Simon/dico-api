@@ -55,4 +55,4 @@ COPY --from=install /temp/dev/node_modules/figlet/fonts/Standard.flf node_module
 # run the app
 USER bun
 EXPOSE 80/tcp
-ENTRYPOINT [ "/usr/src/app/app" ]
+ENTRYPOINT [ "/usr/src/app/bin/dico-api" ]

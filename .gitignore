@@ -183,4 +183,4 @@ dist
 .env.local
 .env.development
 .env.production
-app
+bin/
