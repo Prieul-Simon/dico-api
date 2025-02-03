@@ -49,8 +49,6 @@ COPY --from=prerelease /usr/src/app/bin/ bin/
 # Also copy source files for linking in sourcemaps
 COPY --from=prerelease /usr/src/app/app.ts .
 COPY --from=prerelease /usr/src/app/src/ src/
-# EDIT: need to copy some node_modules required during runtime
-COPY --from=install /temp/dev/node_modules/figlet/fonts/Standard.flf node_modules/figlet/fonts/
 
 # run the app
 USER bun

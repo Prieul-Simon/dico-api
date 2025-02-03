@@ -1,12 +1,10 @@
 import type { Server } from "bun";
-import figlet from "figlet";
 import { getDefinitions, type Definition } from "./larousse";
+import { apiName } from "./macros/constants" with { type: 'macro' };
 
+const API_NAME = apiName()
 const PORT = Bun.env['PORT'] ?? ((): number => { throw new Error('PORT environment variable is not set') })()
 
-const API_NAME = figlet.textSync("SCRABBLE DICO API", {
-    font: "Standard",
-})
 const IDLE_TIMEOUT_IN_SECONDS = 30
 const DEFINITION_PATHNAME = "/definitions/"
 
@@ -28,9 +26,9 @@ export async function serverFetch(req: Request) {
         return new Response('Server is logging a stacktrace to test built code is well source-mapped\n')
     }
 
-    if (url.pathname.startsWith(DEFINITION_PATHNAME) 
-            && url.pathname.substring(DEFINITION_PATHNAME.length) !== ""
-            && !url.pathname.substring(DEFINITION_PATHNAME.length).includes("/")) {
+    if (url.pathname.startsWith(DEFINITION_PATHNAME)
+        && url.pathname.substring(DEFINITION_PATHNAME.length) !== ""
+        && !url.pathname.substring(DEFINITION_PATHNAME.length).includes("/")) {
         const word = url.pathname.substring(DEFINITION_PATHNAME.length)
         const definition = await getDefinitions(word)
         return toDefinitionResponse(definition)
