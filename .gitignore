@@ -182,5 +182,6 @@ dist
 .env
 .env.local
 .env.development
+.env.test
 .env.production
 bin/

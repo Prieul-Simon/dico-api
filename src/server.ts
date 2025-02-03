@@ -14,29 +14,31 @@ export function createServer(): Server {
     const server = Bun.serve({
         port: PORT,
         idleTimeout: IDLE_TIMEOUT_IN_SECONDS,
-        async fetch(req) {
-            const url = new URL(req.url)
-            if (url.pathname === "/") return new Response(`${API_NAME}\n`)
-            if (url.pathname === "/_/test_stacktrace") {
-                throwErrorAndLogStacktrace()
-                return new Response('Server is logging a stacktrace to test built code is well source-mapped\n')
-            }
-
-            if (url.pathname.startsWith(DEFINITION_PATHNAME) 
-                    && url.pathname.substring(DEFINITION_PATHNAME.length) !== ""
-                    && !url.pathname.substring(DEFINITION_PATHNAME.length).includes("/")) {
-                const word = url.pathname.substring(DEFINITION_PATHNAME.length)
-                const definition = await getDefinitions(word)
-                return toDefinitionResponse(definition)
-            }
-
-            return new Response("404 Not Found\n", {
-                status: 404
-            })
-        },
+        fetch: serverFetch,
     })
-    console.info('Server started on http://localhost:%s !', server.port)
+    console.info('Server started on http://%s:%s !', server.hostname, server.port)
     return server
+}
+
+export async function serverFetch(req: Request) {
+    const url = new URL(req.url)
+    if (url.pathname === "/") return new Response(`${API_NAME}\n`)
+    if (url.pathname === "/_/test_stacktrace") {
+        throwErrorAndLogStacktrace()
+        return new Response('Server is logging a stacktrace to test built code is well source-mapped\n')
+    }
+
+    if (url.pathname.startsWith(DEFINITION_PATHNAME) 
+            && url.pathname.substring(DEFINITION_PATHNAME.length) !== ""
+            && !url.pathname.substring(DEFINITION_PATHNAME.length).includes("/")) {
+        const word = url.pathname.substring(DEFINITION_PATHNAME.length)
+        const definition = await getDefinitions(word)
+        return toDefinitionResponse(definition)
+    }
+
+    return new Response("404 Not Found\n", {
+        status: 404
+    })
 }
 
 function toDefinitionResponse(definition: Definition): Response {

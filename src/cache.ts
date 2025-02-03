@@ -9,14 +9,19 @@ const DEFAULT_WORD = 'Scrabble'
 
 type RedisClient = Awaited<ReturnType<typeof createClient>>
 let redisClient: RedisClient = null as unknown as RedisClient
-createClient({
+let redisClientPromise: Promise<RedisClient> = createClient({
     url: `redis://${REDIS_URL}`,
 })
     .on('error', (err) => console.error('Redis Client Error', err))
     .connect()
-    .then((client) => { redisClient = client })
+redisClientPromise.then((client) => { redisClient = client })
 
-export async function maybeCache(word: string, definition: Definition) : Promise<Definition> {
+export async function onRedisClientReady(): Promise<void> {
+    await redisClientPromise
+    return
+}
+
+export async function maybeCache(word: string, definition: Definition): Promise<Definition> {
     const definitionAsString = JSON.stringify(definition)
     for (const altWord of [word, ...definition.words]) {
         const key = computeKey(altWord)

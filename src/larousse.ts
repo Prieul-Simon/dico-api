@@ -53,7 +53,7 @@ async function computeDefinition(word: string): Promise<Definition | { err: unkn
         })
         if (axiosResponse.status !== 200) return { err: `Status code: ${axiosResponse.status}` }
         if (typeof axiosResponse.data !== 'string') return { err: 'Response is not a string' }
-        
+
         const html = axiosResponse.data
         const $ = load(html)
         const redirectedWords = extractRedirectedWords($)
@@ -77,6 +77,7 @@ function extractRedirectedWords($: CheerioAPI): string[] {
     if (text.endsWith(END_ITEM_WORD)) {
         text = text.slice(0, -END_ITEM_WORD.length)
     }
+    if (text.length < 1) return []
     return text.split(',')
         .map(sanitize)
 }

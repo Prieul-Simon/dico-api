@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "bun --hot run app.ts",
     "tsc-watch": "tsc --watch",
-    "test": "echo 'No test yet!' && exit 0",
+    "test": "     bun test --timeout 30000",
+    "test-unit": "bun test --timeout 30000 unit/",
+    "test-e2e": " bun test --timeout 30000 e2e/",
     "build": "       tsc && bun build app.ts --target=bun         --minify-syntax --minify-whitespaces --sourcemap --outdir ./dist",
     "build-binary": "tsc && bun build app.ts --compile --bytecode --minify-syntax --minify-whitespaces --sourcemap --outfile bin/dico-api",
     "start": "bun run dist/app.js"
