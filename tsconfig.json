@@ -8,6 +8,9 @@
     "module": "ESNext",
     "moduleDetection": "force",
     "allowJs": false,
+    "types": [
+      "@types/bun",
+    ],
 
     // Bundler mode
     "moduleResolution": "bundler",
