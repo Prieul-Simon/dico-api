@@ -1,2 +1,2 @@
 docker build \
-    -t prieul/dico-api:v0.2.0 .
+    -t prieul/dico-api:v0.2.1 .

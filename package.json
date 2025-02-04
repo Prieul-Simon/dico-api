@@ -2,7 +2,7 @@
   "name": "dico-api",
   "module": "app.ts",
   "type": "module",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "scripts": {
     "dev": "bun --hot run app.ts | pino-pretty",
     "tsc-watch": "tsc --watch",
