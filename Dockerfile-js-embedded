@@ -37,7 +37,7 @@ RUN bun run build
 # EDIT: no production dependencies as build script will embed them into app.js (they won't be present for sourcemaps though)
 FROM base AS release
 WORKDIR /usr/src/app
-RUN adduser -D bun
+# RUN adduser -D bun
 
 # Install packages
 # RUN apk upgrade --no-cache && \
